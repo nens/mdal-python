@@ -23,10 +23,10 @@ WORKDIR /
 
 # using curl to download the zips is much faster than a simple git clone
 RUN mkdir MDAL
-RUN curl -Lo MDAL.tar.gz https://github.com/lutraconsulting/MDAL/archive/compile-with-docker.tar.gz && tar -xzf MDAL.tar.gz -C MDAL --strip-components=1
+RUN curl -Lo MDAL.tar.gz https://github.com/lutraconsulting/MDAL/archive/master.tar.gz && tar -xzf MDAL.tar.gz -C MDAL --strip-components=1
 
 RUN mkdir python-mdal
-RUN curl -Lo python-mdal.tar.gz https://github.com/nens/mdal-python/archive/main.tar.gz && tar -xzf python-mdal.tar.gz -C python-mdal --strip-components=1
+RUN curl -Lo python-mdal.tar.gz https://github.com/nens/mdal-python/archive/compile-with-docker.tar.gz && tar -xzf python-mdal.tar.gz -C python-mdal --strip-components=1
 
 # Build MDAL
 WORKDIR /MDAL/build
