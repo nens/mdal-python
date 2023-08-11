@@ -35,7 +35,7 @@ RUN curl -Lo MDAL.tar.gz https://github.com/lutraconsulting/MDAL/archive/refs/ta
 # Build MDAL
 WORKDIR /MDAL/build
 ARG CMAKE_INSTALL_PREFIX=/usr
-RUN cmake -DCMAKE_BUILD_TYPE=Rel -DENABLE_TESTS=ON .. && make && cmake -P cmake_install.cmake
+RUN cmake -DCMAKE_BUILD_TYPE=Rel -DENABLE_TESTS=ON .. && make && cmake --install .
 
 # Avoid issues with upgrading an apt-managed pip.
 RUN curl -s https://bootstrap.pypa.io/get-pip.py | python3
