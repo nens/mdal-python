@@ -21,12 +21,15 @@ RUN apt-get update && apt-get install -y \
 
 WORKDIR /
 
-# using curl to download the zips is much faster than a simple git clone
-RUN curl -Lo MDAL.tar.gz https://github.com/lutraconsulting/MDAL/archive/master.tar.gz && tar -xzf MDAL.tar.gz
-RUN mv MDAL* MDAL
+ARG MDALVERSION=1.0.3
 
-RUN curl -Lo mdal-python.tar.gz https://github.com/nens/mdal-python/archive/compile-with-docker.tar.gz && tar -xzf mdal-python.tar.gz
-RUN mv mdal-python* mdal-python
+# using curl to download the zips is much faster than a simple git clone
+RUN curl -Lo MDAL.tar.gz https://github.com/lutraconsulting/MDAL/archive/refs/tags/release-${MDALVERSION}.tar.gz && \
+    tar -xzf MDAL.tar.gz && \
+    rm MDAL.tar.gz && \
+    mv MDAL-release-${MDALVERSION} MDAL
+
+COPY . mdal-python
 
 # Build MDAL
 WORKDIR /MDAL/build
