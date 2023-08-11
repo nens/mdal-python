@@ -4,6 +4,8 @@ LABEL py_version='3.x'
 
 ARG DEBIAN_FRONTEND=noninteractive
 
+VOLUME /dist
+
 RUN apt-get update && apt-get install -y \
     curl \
     libgdal-dev \
@@ -15,6 +17,7 @@ RUN apt-get update && apt-get install -y \
     g++ \
     cmake \
     git \
+    unzip \
 && rm -rf /var/lib/apt/lists/*
 
 # First fetch the code for MDAL and mdal-python
@@ -29,8 +32,6 @@ RUN curl -Lo MDAL.tar.gz https://github.com/lutraconsulting/MDAL/archive/refs/ta
     rm MDAL.tar.gz && \
     mv MDAL-release-${MDALVERSION} MDAL
 
-COPY . mdal-python
-
 # Build MDAL
 WORKDIR /MDAL/build
 ARG CMAKE_INSTALL_PREFIX=/usr
@@ -40,13 +41,13 @@ RUN cmake -DCMAKE_BUILD_TYPE=Rel -DENABLE_TESTS=ON .. && make && cmake -P cmake_
 RUN curl -s https://bootstrap.pypa.io/get-pip.py | python3
 RUN pip install -U pip
 
-RUN pip install build auditwheel
+RUN pip install build auditwheel patchelf
 
 ENV PIP_WHEEL_DIR=/wheeldir
 ENV PIP_FIND_LINKS=/wheeldir
 
-VOLUME /dist
+COPY . /mdal-python
 
 WORKDIR /mdal-python
 
-ENTRYPOINT docker_entrypoint.sh
+ENTRYPOINT /mdal-python/docker_entrypoint.sh
