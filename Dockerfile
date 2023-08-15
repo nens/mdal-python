@@ -18,6 +18,7 @@ RUN apt-get update && apt-get install -y \
     cmake \
     git \
     unzip \
+    zip \
 && rm -rf /var/lib/apt/lists/*
 
 # First fetch the code for MDAL and mdal-python
@@ -30,18 +31,17 @@ ARG MDALVERSION=release-1.0.3
 RUN curl -Lo MDAL.tar.gz https://github.com/lutraconsulting/MDAL/archive/refs/tags/${MDALVERSION}.tar.gz && \
     tar -xzf MDAL.tar.gz && \
     rm MDAL.tar.gz && \
-    mv MDAL-release-${MDALVERSION} MDAL
+    mv MDAL-${MDALVERSION} MDAL
 
 # Build MDAL
 WORKDIR /MDAL/build
-ARG CMAKE_INSTALL_PREFIX=/usr
 RUN cmake -DCMAKE_BUILD_TYPE=Rel -DENABLE_TESTS=ON .. && make && cmake --install .
 
 # Avoid issues with upgrading an apt-managed pip.
 RUN curl -s https://bootstrap.pypa.io/get-pip.py | python3
 RUN pip install -U pip
 
-RUN pip install build auditwheel patchelf
+RUN pip install build patchelf
 
 ENV PIP_WHEEL_DIR=/wheeldir
 ENV PIP_FIND_LINKS=/wheeldir
