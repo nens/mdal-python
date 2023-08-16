@@ -5,6 +5,7 @@ LABEL py_version='3.x'
 ARG DEBIAN_FRONTEND=noninteractive
 
 VOLUME /dist
+VOLUME /source-code
 
 RUN apt-get update && apt-get install -y \
     curl \
@@ -46,8 +47,6 @@ RUN pip install build patchelf
 ENV PIP_WHEEL_DIR=/wheeldir
 ENV PIP_FIND_LINKS=/wheeldir
 
-COPY . /mdal-python
-
-WORKDIR /mdal-python
+WORKDIR /
 
 ENTRYPOINT /mdal-python/docker_entrypoint.sh
