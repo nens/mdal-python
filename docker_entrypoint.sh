@@ -1,6 +1,6 @@
 mkdir /mdal-python
 cd /mdal-python
-cp /source-code/* .
+cp -r /source-code/* .
 mkdir wheel_build
 python3 -m build --wheel --outdir wheel_build
 cd wheel_build
