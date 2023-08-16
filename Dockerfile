@@ -47,6 +47,11 @@ RUN pip install build patchelf
 ENV PIP_WHEEL_DIR=/wheeldir
 ENV PIP_FIND_LINKS=/wheeldir
 
+RUN mkdir -p /scripts
+COPY docker_entrypoint.sh /scripts
+WORKDIR /scripts
+RUN chmod +x docker_entrypoint.sh
+
 WORKDIR /
 
-ENTRYPOINT /mdal-python/docker_entrypoint.sh
+ENTRYPOINT /scripts/docker_entrypoint.sh
