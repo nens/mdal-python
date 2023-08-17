@@ -1,0 +1,54 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - '*'
+  workflow_dispatch:
+
+jobs:
+  build_wheel:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v3
+
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@master
+
+      - name: Build Docker image
+        uses: docker/build-push-action@v4
+        with:
+          push: false
+          load: true
+          tags: mdal-python:latest
+          file: ./docker/Dockerfile
+          context: ./docker
+          target: prod
+          cache-from: type=gha
+          cache-to: type=gha,mode=min
+
+      - name: Build wheel
+        run: docker run --rm -e MDALVERSION='release-1.0.3' -v .:/source-code:ro -v ./dist:/dist mdal-python
+      
+      - name: Upload wheel as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          path: ./dist/*.whl
+          retention-days: 5
+
+  publish:
+    name: Publish on GitHub and PyPI
+    needs: [build_wheel]
+    runs-on: ubuntu-latest
+    # release on every tag
+    if: github.event_name == 'push' && startsWith(github.event.ref, 'refs/tags/')
+    steps:
+      - uses: actions/download-artifact@v3
+        with:
+          name: artifact
+          path: dist
+
+      - name: Upload Github release
+        uses: softprops/action-gh-release@v1
