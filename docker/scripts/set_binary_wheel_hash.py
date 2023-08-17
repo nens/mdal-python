@@ -1,3 +1,12 @@
+"""
+This script adds a file to a pip wheel RECORD, so that when pip installs
+a wheel, it knows this file belongs with the package.
+
+For more information information about the wheel RECORD, look at PEP 491,
+specifically the section about the .dist-info directory.
+https://peps.python.org/pep-0491/#the-dist-info-directory
+"""
+
 import hashlib
 import base64
 import argparse
