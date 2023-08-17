@@ -46,10 +46,9 @@ RUN pip install build patchelf
 ENV PIP_WHEEL_DIR=/wheeldir
 ENV PIP_FIND_LINKS=/wheeldir
 
-RUN mkdir -p /scripts
-COPY docker_entrypoint.sh set_binary_wheel_hash.py /scripts/
+COPY scripts /
 WORKDIR /scripts
-RUN chmod +x docker_entrypoint.sh
+RUN chmod +x *
 
 WORKDIR /
 
