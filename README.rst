@@ -63,6 +63,9 @@ This will ONLY work if there is a valid and working installation of MDAL on the 
 
     As of version 1.1.0, this package has been written to the NumPy 2.0 ABI. This should work with any version of NumPy >= 1.25 and Python >=3.9
 
+Alternatively, on a Linux machine, you can clone this repository and run docker/create_wheel.sh, which will create a binary python-mdal wheel
+in the `dist` directory containing the MDAL binary. The wheel is built via docker for Ubuntu 22.04 LTS
+
 
 GitHub
 ................................................................................
