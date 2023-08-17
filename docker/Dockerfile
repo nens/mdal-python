@@ -7,7 +7,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 VOLUME /dist
 VOLUME /source-code
 
-COPY requirements /
+COPY ./requirements/ /requirements/
 
 RUN apt-get update && apt-get install -y $(cat /requirements/apt_requirements.txt) && rm -rf /var/lib/apt/lists/*
 
@@ -34,10 +34,7 @@ RUN pip install -r /requirements/pip_requirements.txt
 ENV PIP_WHEEL_DIR=/wheeldir
 ENV PIP_FIND_LINKS=/wheeldir
 
-COPY scripts /
-WORKDIR /scripts
-RUN chmod +x *
-
-WORKDIR /
+COPY ./scripts/ /scripts/
+RUN cd /scripts && chmod +x *
 
 ENTRYPOINT /scripts/docker_entrypoint.sh
