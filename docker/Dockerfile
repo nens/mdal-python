@@ -7,21 +7,9 @@ ARG DEBIAN_FRONTEND=noninteractive
 VOLUME /dist
 VOLUME /source-code
 
-RUN apt-get update && apt-get install -y \
-    curl \
-    libgdal-dev \
-    libhdf5-dev \
-    libnetcdf-dev \
-    libxml2-dev \
-    python3-dev \
-    python3-venv \
-    python3-pip \
-    g++ \
-    cmake \
-    git \
-    unzip \
-    zip \
-&& rm -rf /var/lib/apt/lists/*
+COPY requirements /
+
+RUN apt-get update && apt-get install -y $(cat /requirements/apt_requirements.txt) && rm -rf /var/lib/apt/lists/*
 
 # First fetch the code for MDAL and mdal-python
 
@@ -41,7 +29,7 @@ RUN cmake -DCMAKE_BUILD_TYPE=Rel -DENABLE_TESTS=ON .. && make && cmake --install
 
 RUN pip install -U pip setuptools
 
-RUN pip install build patchelf
+RUN pip install -r /requirements/pip_requirements.txt
 
 ENV PIP_WHEEL_DIR=/wheeldir
 ENV PIP_FIND_LINKS=/wheeldir
