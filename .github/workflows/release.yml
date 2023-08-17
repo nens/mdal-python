@@ -25,7 +25,6 @@ jobs:
           tags: mdal-python:latest
           file: ./docker/Dockerfile
           context: ./docker
-          target: prod
           cache-from: type=gha
           cache-to: type=gha,mode=min
 
