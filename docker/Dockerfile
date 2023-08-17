@@ -15,6 +15,7 @@ RUN apt-get update && apt-get install -y \
     libxml2-dev \
     python3-dev \
     python3-venv \
+    python3-pip \
     g++ \
     cmake \
     git \
@@ -38,9 +39,7 @@ RUN curl -Lo MDAL.tar.gz https://github.com/lutraconsulting/MDAL/archive/refs/ta
 WORKDIR /MDAL/build
 RUN cmake -DCMAKE_BUILD_TYPE=Rel -DENABLE_TESTS=ON .. && make && cmake --install .
 
-# Avoid issues with upgrading an apt-managed pip.
-RUN curl -s https://bootstrap.pypa.io/get-pip.py | python3
-RUN pip install -U pip
+RUN pip install -U pip setuptools
 
 RUN pip install build patchelf
 
