@@ -12,7 +12,7 @@ cd extractedwheel
 mkdir mdal_python.libs
 cp /usr/local/lib/libmdal.so mdal_python.libs
 DISTINFO_DIR=$(find . -name *.dist-info)
-python3 /mdal-python/set_binary_wheel_hash.py mdal_python.libs/libmdal.so $DISTINFO_DIR/RECORD
+python3 /scripts/set_binary_wheel_hash.py mdal_python.libs/libmdal.so $DISTINFO_DIR/RECORD
 patchelf --set-rpath '$ORIGIN'/../mdal_python.libs mdal/libmdalpython*.so
 zip -r $WHEEL_NAME *
 cp $WHEEL_NAME /dist
