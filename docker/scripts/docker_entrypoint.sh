@@ -1,11 +1,11 @@
 #! /usr/bin/env sh
 set -e
 
-# copy source code to a temporary directory
+# copy source code from mountpoint to a temporary directory so we can write to it
 mkdir /mdal-python
 cd /mdal-python
 cp -r /source-code/* .
-# build it in a temporary build directory
+# build it in a separate build directory
 mkdir wheel_build
 python3 -m build --wheel --outdir wheel_build
 cd wheel_build
