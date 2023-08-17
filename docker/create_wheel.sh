@@ -12,4 +12,5 @@ if [ $CURRENTDIR != "docker" ]; then
 fi
 
 docker build --tag "mdal-python" .
-docker run --rm -v "$(pwd)"/..:/source-code:ro -v "$(pwd)"/../dist:/dist mdal-python
+docker run --rm -v "$PWD"/..:/source-code:ro -v "$PWD"/../dist:/dist mdal-python
+echo "Wheel has been written to ${PWD%/*}/dist"
