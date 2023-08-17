@@ -1,3 +1,6 @@
+#! /usr/bin/env sh
+set -e
+
 CURRENTDIR=$(basename "$PWD")
 
 if [ $CURRENTDIR != "docker" ]; then
