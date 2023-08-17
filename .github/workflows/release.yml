@@ -38,7 +38,7 @@ jobs:
           retention-days: 5
 
   publish:
-    name: Publish on GitHub and PyPI
+    name: Publish on GitHub
     needs: [build_wheel]
     runs-on: ubuntu-latest
     # release on every tag
