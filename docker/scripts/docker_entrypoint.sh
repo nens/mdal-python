@@ -1,3 +1,6 @@
+#! /usr/bin/env sh
+set -e
+
 mkdir /mdal-python
 cd /mdal-python
 cp -r /source-code/* .
