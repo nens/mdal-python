@@ -65,6 +65,7 @@ This will ONLY work if there is a valid and working installation of MDAL on the 
 
 Alternatively, on a Linux machine, you can clone this repository and run docker/create_wheel.sh, which will create a binary python-mdal wheel
 in the `dist` directory containing the MDAL binary. The wheel is built via docker for Ubuntu 22.04 LTS.
+To use the wheel, you'll need to install the MDAL apt driver dependencies listed under https://github.com/lutraconsulting/MDAL#linux.
 
 
 GitHub
