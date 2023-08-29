@@ -25,7 +25,7 @@ RUN curl -Lo MDAL.tar.gz https://github.com/lutraconsulting/MDAL/archive/refs/ta
 
 # Build MDAL
 WORKDIR /MDAL/build
-RUN cmake -DCMAKE_BUILD_TYPE=Rel -DENABLE_TESTS=ON .. && make && cmake --install .
+RUN cmake .. -DSQLITE3_INCLUDE_DIR=/usr/include -DSQLITE3_LIBRARY=/usr/lib/x86_64-linux-gnu/libsqlite3.so -DCMAKE_BUILD_TYPE=Rel -DENABLE_TESTS=ON  && make && cmake --install .
 
 RUN pip install -U pip setuptools
 
