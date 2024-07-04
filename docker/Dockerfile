@@ -18,10 +18,10 @@ WORKDIR /
 ARG MDALVERSION=release-1.0.3
 
 # using curl to download the zips is much faster than a simple git clone
-RUN curl -Lo MDAL.tar.gz https://github.com/lutraconsulting/MDAL/archive/refs/tags/${MDALVERSION}.tar.gz && \
-    tar -xzf MDAL.tar.gz && \
-    rm MDAL.tar.gz && \
-    mv MDAL-${MDALVERSION} MDAL
+RUN mkdir MDAL && \
+    curl -Lo MDAL.tar.gz https://github.com/lutraconsulting/MDAL/archive/refs/tags/${MDALVERSION}.tar.gz && \
+    tar -xzf MDAL.tar.gz --strip 1 -C MDAL && \
+    rm MDAL.tar.gz
 
 # Build MDAL
 WORKDIR /MDAL/build
